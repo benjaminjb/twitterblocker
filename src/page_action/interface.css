@@ -1,0 +1,21 @@
+#mainPopup {
+	padding: 10px;
+	min-height: 200px;
+	width: 400px;
+	font-family: Helvetica, Ubuntu, Arial, sans-serif;
+}
+/*	h1 {
+	font-size: 2em;
+}*/
+.column {
+	width: 50%;
+}
+.header, .footer {
+	width: 100%;
+}
+.instructions, .header {
+	float: left;
+}
+.dictionary, .subtitle {
+	float: right;
+}

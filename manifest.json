@@ -18,7 +18,7 @@
   "page_action": {
     "default_icon": "icons/icon19.png",
     "default_title": "Shush spoilers on Twitter",
-    "default_popup": "src/page_action/page_action.html"
+    "default_popup": "src/page_action/interface.html"
   },
   "permissions": [
     "tabs",
@@ -29,9 +29,6 @@
     "http://www.twitter.com/*",
     "https://*.twitter.com/"
   ],
-  "omnibox": {
-    "keyword": "shush!"
-  },
   "content_scripts": [
     {
       "matches": [
@@ -42,7 +39,6 @@
       ],
       "js": [
         "js/jquery/jquery.min.js",
-        // "src/inject/inject.js",
         "src/inject/content.js"
       ],
       "run_at": "document_idle"
