@@ -61,8 +61,7 @@ function runBlockedWords(tweets, words) {
 // Mutation observer set-up
 // // // // // // // // // // // // // // // //
 
-// var insertedNodes = [];
-
+// mutation observer looks for mutations and runs the blocked words function on those new nodes
 var observer = new MutationObserver(function(mutations) {
  	mutations.forEach(function(mutation) {
 		storage.get('banned', function(blockedWords) {
@@ -71,6 +70,7 @@ var observer = new MutationObserver(function(mutations) {
 	})
 });
 
+// The observer looks for the children of the .js-navigable-stream 
 observer.observe(document.querySelector('.js-navigable-stream'), { childList: true });
 
 // // // // // // // // // // // // // // // //
