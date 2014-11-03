@@ -15,14 +15,16 @@ var storage = chrome.storage.sync;
 // Runs saved blocked list on load
 chrome.runtime.sendMessage({}, function(response) {
 	storage.get('banned', function(blockedWords) {
-		runBlockedWords(blockedWords.banned);
+		var tweets = $('li.js-stream-item');
+		runBlockedWords(tweets, blockedWords.banned);
 	});
 });
 
 // Recieves message from interface.js with new list of words to block as request.text
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 	resetHiddenTweets();
-	runBlockedWords(request.text);
+	var tweets = $('li.js-stream-item');
+	runBlockedWords(tweets, request.text);
 	sendResponse();
 });
 
@@ -39,9 +41,8 @@ function resetHiddenTweets() {
 }
 
 // Hides any currently visible tweets that match any of the words
-function runBlockedWords(words) {
-	var tweets = $('li.js-stream-item');
-
+function runBlockedWords(tweets, words) {
+	
 	(function(){
 		for (var i = 0; i < tweets.length; i++) {
 			for (var j = 0; j < words.length; j++) {
@@ -55,6 +56,22 @@ function runBlockedWords(words) {
 	})();
 	addEventListeners();
 }
+
+// // // // // // // // // // // // // // // //
+// Mutation observer set-up
+// // // // // // // // // // // // // // // //
+
+// var insertedNodes = [];
+
+var observer = new MutationObserver(function(mutations) {
+ 	mutations.forEach(function(mutation) {
+		storage.get('banned', function(blockedWords) {
+			runBlockedWords(mutation.addedNodes, blockedWords.banned);
+		});
+	})
+});
+
+observer.observe(document.querySelector('.js-navigable-stream'), { childList: true });
 
 // // // // // // // // // // // // // // // //
 // Utility functions
