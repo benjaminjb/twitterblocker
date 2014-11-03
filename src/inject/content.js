@@ -1,113 +1,79 @@
 'use strict';
 
+// // // // // // // // // // // // // // // //
+// Utility variables
+// // // // // // // // // // // // // // // //
+
+// Variable allows for quick reassignment of chrome.storage
 var storage = chrome.storage.sync;
 
-// Send message to background page to show page icon
-// This message only runs when this content script runs--only on Twitter and Twitter-related pages
-chrome.runtime.sendMessage({}, function() {});
+// // // // // // // // // // // // // // // //
+// Message senders and listeners
+// // // // // // // // // // // // // // // //
 
-// Respond to messages from background page;
-// the request object will include what's entered in from the the omnibox
+// Tells background.js to set the page icon
+// Runs saved blocked list on load
+chrome.runtime.sendMessage({}, function(response) {
+	storage.get('banned', function(blockedWords) {
+		runBlockedWords(blockedWords.banned);
+	});
+});
+
+// Recieves message from interface.js with new list of words to block as request.text
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-
-	// Enters the banned words into the extension storage
-	saveBlocked(request.text);
-
-	alert("storage alert ", storage.get("banned"));
-	
-	// Grabs the visible tweets
-	// var tweets = $('li.js-stream-item');
-
-	// (function(){
-	// 	for (var i = 0; i < tweets.length; i++) {
-	// 		if ($(tweets[i]).find('.tweet-text').text().indexOf(request.text) !== -1) {
-	// 			$(tweets[i]).find($('.tweet-text')).prev().after("<a class='spoiler-revealer'>Tweet related to <strong>"+request.text+"</strong> hidden. Hover to reveal or click to dismiss</a>");
-	// 			$(tweets[i]).find($('.tweet-text')).hide();
-	// 			$(tweets[i]).find($('.js-media-container')).hide();
-	// 		}
- //    }
-	// })();
-
-	alert("after storage");
-
+	resetHiddenTweets();
+	runBlockedWords(request.text);
 	sendResponse();
 });
 
-function saveBlocked(text) {
+// // // // // // // // // // // // // // // //
+// Main logic
+// // // // // // // // // // // // // // // //
 
-	alert("before blocked");
-	storage.get('banned', function(blockedWords) {
-		var blocked = blockedWords.banned; 
-		blocked.push(text);
-		console.dir(blocked);
-		storage.set({'banned': blocked}, function() {
- 	 		alert('Settings saved'); 
- 	 		 	storage.get('banned', function(blockedWords) {
-				console.dir(blockedWords); 
-				var blocked = blockedWords.banned;
-				console.dir(blocked);
-			});
-  	});
- 	});
-  // storage.get('banned', function(blockedWords) {
- 	//  	alert("second "+blockedWords.banned +" "+ typeof blockedWords.banned);
- 	// });
-	// storage.get('banned', function(blockedWords) {
-
-		// if (blockedWords == null) {
-		// 	alert("woops");
-		// 	return;
-		// }
-		// var blocked = blockedWords || [] ;
-		// blocked.push(text);
-		// alert("blocked");
-	 //  alert(blocked);
-  // }); 
-  	
-	  
-	alert("after blocked");
-		// 
-		// alert(blocked);
-		// alert("after push");
-		// storage.set({'banned': blocked}, function() {
-	 //    alert('Settings saved');
-	 //  });
-  // })();	
+// Shows all previously hidden tweets
+function resetHiddenTweets() {
+	var hidden = $('.spoiler-revealer');
+	for (var i = 0; i < hidden.length; i++) {
+		hidden[i].click();
+	}
 }
 
-// function loadChanges() {
-//   storage.get('banned', function(items) {
-//     // To avoid checking items.css we could specify storage.get({css: ''}) to
-//     // return a default value of '' if there is no css value yet.
-//     if (items.css) {
-//       textarea.value = items.css;
-//       message('Loaded saved CSS.');
-//     }
-//   });
-// }
+// Hides any currently visible tweets that match any of the words
+function runBlockedWords(words) {
+	var tweets = $('li.js-stream-item');
 
-// chrome.storage.sync.set({mykey: 10}, function (mykey) {
-// chrome.storage.sync.get(mykey, function(result) {
-// console.log("data", result)
-// }
-// )
-// }
-// )
-	
+	(function(){
+		for (var i = 0; i < tweets.length; i++) {
+			for (var j = 0; j < words.length; j++) {
+				if ($(tweets[i]).find('.tweet-text').text().indexOf(words[j]) !== -1) {
+					$(tweets[i]).find($('.tweet-text')).prev().after("<a class='spoiler-revealer'>Tweet related to <strong>"+words[j]+"</strong> hidden. Hover to reveal or click to dismiss</a>");
+					$(tweets[i]).find($('.tweet-text')).hide();
+					$(tweets[i]).find($('.js-media-container')).hide();
+				}
+			}
+    }
+	})();
+	addEventListeners();
+}
 
+// // // // // // // // // // // // // // // //
+// Utility functions
+// // // // // // // // // // // // // // // //
 
-$('.spoiler-revealer').hover(function() {
-	$($(this).parent()).find($('.tweet-text')).fadeIn( 200 );
-	$($(this).parent()).find($('.js-media-container')).fadeIn( 200 );
-	}, 
-	function() {
-		$($(this).parent()).find($('.tweet-text')).fadeOut( 200 );
-		$($(this).parent()).find($('.js-media-container')).fadeOut( 200 );
-	}
-);
+function addEventListeners() {
+	$('.spoiler-revealer').hover(function() {
+		$($(this).parent()).find($('.tweet-text')).fadeIn( 200 );
+		$($(this).parent()).find($('.js-media-container')).fadeIn( 200 );
+		}, 
+		function() {
+			$($(this).parent()).find($('.tweet-text')).fadeOut( 200 );
+			$($(this).parent()).find($('.js-media-container')).fadeOut( 200 );
+		}
+	);
 
-$('.spoiler-revealer').on('click', function() {
-	$($(this).parent()).find($('.tweet-text')).show();
-	$($(this).parent()).find($('.js-media-container')).show();
-	$(this).remove();
-});
+	$('.spoiler-revealer').on('click', function() {
+		$($(this).parent()).find($('.tweet-text')).show();
+		$($(this).parent()).find($('.js-media-container')).show();
+		$(this).remove();
+	});
+}

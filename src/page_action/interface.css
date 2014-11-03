@@ -19,3 +19,28 @@
 .dictionary, .subtitle {
 	float: right;
 }
+.remove-button {
+	margin: 0px;
+	padding: 0px 3px;
+	margin-right: 10px;
+	border-radius: 45%;
+	color: red;
+}
+ul {
+	list-style-type: none;
+}
+
+/*.bg {
+	width: 100%;
+	z-index: 1;
+  opacity: .5;
+}
+
+.overlay {
+	background-color: rgba(248, 247, 216, 0.7);
+	z-index: 2;
+}
+
+.text {
+	z-index: 3;
+}*/
