@@ -1,5 +1,5 @@
 #Twitterblocker, aka "shush!"
-##a Google Chrome Extension
+###a Google Chrome Extension
 ==============
 ###Project Overview
 
@@ -8,7 +8,7 @@ Twitterblocker is a Google Chrome Extension that allows users to set words / phr
 I completed this originally as a final project done as part of MakerSquare's accelerated learning program in web app development. 
 
 #### Currently live under the name "shush!" at the [Google Web Store](https://chrome.google.com/webstore/detail/shush/bkphldojjhhknjgafgpgahebiefkogog)   
----
+___
 ###Tech Stack
 
 Built with:
@@ -27,7 +27,7 @@ ___
 * Learn new technologies for persistence and event handling
 * Gain more practice of modular design and clear comments
 
-
+___
 ### Minimum Viable Product goals / User Stories
 
 A User can
