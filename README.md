@@ -12,8 +12,8 @@ ___
 ###Tech Stack
 
 Built with:
-* JavaScript / jQuery
-* HTML / CSS
+* JavaScript and jQuery
+* HTML and CSS
 * chrome.extension.* API
 
 With special thanks to Mutation Observers.
