@@ -25,6 +25,11 @@ $(document).on('ready', function() {
 	$('.engage-blocked-list-button').on('click', function() {
 		engageBlockedListWords();
 	});
+
+ $('body').on('click', 'a', function(){
+   chrome.tabs.create({url: $(this).attr('href')});
+   return false;
+ });
 });
 
 // // // // // // // // // // // // // // // //

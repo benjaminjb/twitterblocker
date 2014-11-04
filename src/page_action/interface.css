@@ -4,9 +4,6 @@
 	width: 400px;
 	font-family: Helvetica, Ubuntu, Arial, sans-serif;
 }
-/*	h1 {
-	font-size: 2em;
-}*/
 .column {
 	width: 50%;
 }
@@ -29,18 +26,3 @@
 ul {
 	list-style-type: none;
 }
-
-/*.bg {
-	width: 100%;
-	z-index: 1;
-  opacity: .5;
-}
-
-.overlay {
-	background-color: rgba(248, 247, 216, 0.7);
-	z-index: 2;
-}
-
-.text {
-	z-index: 3;
-}*/
