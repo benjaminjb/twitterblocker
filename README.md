@@ -22,7 +22,6 @@ ___
 ###Learning goals
 
 * Learn the architecture of a Chrome Extension
-    - 
 * Practice an entirely JavaScript process
 * Learn new technologies for persistence and event handling
 * Gain more practice of modular design and clear comments
