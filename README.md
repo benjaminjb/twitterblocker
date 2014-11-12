@@ -55,4 +55,5 @@ Possible extensions:
 * further styling (perhaps with "redacted" theme);
 * figure out related-terms to blocked list, possibly with web-scraping;
 * abstract main logic to other social media, e.g., Facebook;
-* reverse logic so that "shush!" shows only those tweets that include some word(s) and/or phrase(s) and hides all others (a "focus" mode).
+* reverse logic so that "shush!" shows only those tweets that include some word(s) and/or phrase(s) and hides all others (a "focus" mode);
+* write clearer instructions on popup window.
