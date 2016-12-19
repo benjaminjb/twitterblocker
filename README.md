@@ -1,4 +1,5 @@
-#Twitterblocker, aka "shush!"
+#Twitterblocker, aka "shush!" 
+## as seen on someone's twitter feed
 ###a Google Chrome Extension
 ==============
 ###Project Overview
